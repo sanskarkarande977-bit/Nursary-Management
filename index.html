@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GO GREEN - Plant Nursery Management System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header Banner -->
+    <header class="header">
+      <h1>GO GREEN 🌱</h1>
+      <p>PLANT NURSERY MANAGEMENT SYSTEM</p>
+    </header>
+
+    <!-- 8 Menu Options -->
+    <nav class="menu-bar">
+      <button class="menu-btn" onclick="showSection('add')">1. Add New Plant</button>
+      <button class="menu-btn active" onclick="showSection('view')">2. View All Plants</button>
+      <button class="menu-btn" onclick="showSection('search')">3. Search Plant</button>
+      <button class="menu-btn" onclick="showSection('update')">4. Update Plant Stock</button>
+      <button class="menu-btn" onclick="showSection('sell')">5. Sell Plant</button>
+      <button class="menu-btn" onclick="showSection('bill')">6. Generate Bill</button>
+      <button class="menu-btn" onclick="showSection('care')">7. Plant Care Info</button>
+      <button class="menu-btn exit-btn" onclick="showSection('exit')">8. Exit</button>
+    </nav>
+
+    <!-- Status Message Box -->
+    <div id="message-box" class="message-box hidden"></div>
+
+    <!-- 1. Add New Plant Section -->
+    <section id="section-add" class="card hidden">
+      <h2>Add New Plant</h2>
+      <div class="form-group">
+        <label for="add-name">Plant Name</label>
+        <input type="text" id="add-name" placeholder="e.g., Jasmine Plant">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="add-price">Price (₹)</label>
+          <input type="number" id="add-price" min="1" placeholder="e.g., 90">
+        </div>
+        <div class="form-group">
+          <label for="add-qty">Available Quantity</label>
+          <input type="number" id="add-qty" min="1" placeholder="e.g., 15">
+        </div>
+      </div>
+
+      <h3 class="sub-heading">Plant Care Information</h3>
+      <div class="form-group">
+        <label for="add-water">💧 Water Required</label>
+        <input type="text" id="add-water" placeholder="e.g., Moderate (2-3 times a week)">
+      </div>
+      <div class="form-group">
+        <label for="add-fertilizer">🌱 Fertilizer to Use</label>
+        <input type="text" id="add-fertilizer" placeholder="e.g., Organic compost or vermicompost monthly">
+      </div>
+      <div class="form-group">
+        <label for="add-sunlight">☀️ Sunlight Required</label>
+        <input type="text" id="add-sunlight" placeholder="e.g., Partial to full sunlight (4-5 hours daily)">
+      </div>
+      <button class="action-btn" onclick="addPlant()">Save Plant</button>
+    </section>
+
+    <!-- 2. View All Plants Section -->
+    <section id="section-view" class="card">
+      <div class="section-top">
+        <h2>All Available Plants</h2>
+        <span id="total-count" class="badge">5 Plants</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Plant Name</th>
+            <th>Price</th>
+            <th>Stock Quantity</th>
+            <th>Status</th>
+            <th>Care Info</th>
+          </tr>
+        </thead>
+        <tbody id="plants-table-body">
+          <!-- Rows added automatically by JavaScript -->
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. Search Plant Section -->
+    <section id="section-search" class="card hidden">
+      <h2>Search Plant</h2>
+      <div class="search-row">
+        <input type="text" id="search-input" placeholder="Enter plant name (e.g., Tulsi)" onkeydown="if (event.key === 'Enter') searchPlant()">
+        <button class="action-btn" onclick="searchPlant()">Search</button>
+      </div>
+      <div id="search-results" class="search-results"></div>
+    </section>
+
+    <!-- 4. Update Plant Stock Section -->
+    <section id="section-update" class="card hidden">
+      <h2>Update Plant Stock</h2>
+      <div class="form-group">
+        <label for="update-select">Select Plant</label>
+        <select id="update-select"></select>
+      </div>
+      <div class="form-group">
+        <label for="update-qty">Quantity to Add</label>
+        <input type="number" id="update-qty" min="1" placeholder="e.g., 10">
+      </div>
+      <button class="action-btn" onclick="updateStock()">Update &amp; Save Stock</button>
+    </section>
+
+    <!-- 5. Sell Plant Section -->
+    <section id="section-sell" class="card hidden">
+      <h2>Sell Plant</h2>
+      <div class="form-group">
+        <label for="sell-select">Select Plant</label>
+        <select id="sell-select"></select>
+      </div>
+      <div class="form-group">
+        <label for="sell-qty">Quantity Customer Wants to Buy</label>
+        <input type="number" id="sell-qty" min="1" placeholder="e.g., 3">
+      </div>
+      <div class="btn-row">
+        <button class="action-btn" onclick="sellPlant()">Sell &amp; Save</button>
+        <button class="secondary-btn" onclick="showSection('bill')">Go to Generate Bill</button>
+      </div>
+
+      <div id="mini-cart-box" class="mini-cart hidden">
+        <h3>Current Customer Cart</h3>
+        <ul id="mini-cart-list"></ul>
+      </div>
+    </section>
+
+    <!-- 6. Generate Bill & Saved Sales History Section -->
+    <section id="section-bill" class="card hidden">
+      <h2>Generate Customer Bill</h2>
+
+      <!-- Cart preview before generating final bill -->
+      <div id="pending-bill-box">
+        <p id="cart-status-text" class="muted-text"></p>
+        <table>
+          <thead>
+            <tr>
+              <th>Plant Name</th>
+              <th>Quantity</th>
+              <th>Price / Plant</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="cart-table-body"></tbody>
+        </table>
+        <div class="bill-actions">
+          <button class="action-btn" onclick="generateBill()">Generate Final Bill</button>
+        </div>
+      </div>
+
+      <!-- Final printed receipt box -->
+      <div id="final-receipt" class="receipt hidden">
+        <div class="receipt-header">
+          <h3>GO GREEN 🌱 - CUSTOMER BILL</h3>
+          <p>Save Plants, Save Earth!</p>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Plant Name</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody id="receipt-table-body"></tbody>
+        </table>
+        <div class="receipt-total">
+          <span>Grand Total Amount:</span>
+          <strong id="receipt-grand-total">₹0</strong>
+        </div>
+
+        <!-- Plant care info for purchased plants included on the printed bill -->
+        <div id="receipt-care-guide" class="receipt-care">
+          <h4>Plant Care Guide for Your Purchased Plants</h4>
+          <div id="receipt-care-list"></div>
+        </div>
+
+        <p class="receipt-footer">Thank you for shopping with GO GREEN 🌱!</p>
+        <button class="secondary-btn no-print" onclick="window.print()">Print Bill</button>
+      </div>
+
+      <!-- Saved Sales History loaded from nursery_data.json -->
+      <div class="saved-sales-box">
+        <div class="section-top">
+          <h3>Saved Sales History</h3>
+          <span id="sales-total-badge" class="badge">Total Sold: ₹0</span>
+        </div>
+        <p id="sales-empty-text" class="muted-text">No plants sold yet.</p>
+        <table id="sales-table">
+          <thead>
+            <tr>
+              <th>Plant Name</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Total</th>
+              <th>Date &amp; Time</th>
+            </tr>
+          </thead>
+          <tbody id="sales-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7. Plant Care Information Section -->
+    <section id="section-care" class="card hidden">
+      <div class="section-top">
+        <h2>Plant Care Information</h2>
+        <select id="care-filter" class="care-select" onchange="renderCareCards()">
+          <option value="ALL">Show All Plants</option>
+        </select>
+      </div>
+      <div id="care-cards-container" class="care-grid">
+        <!-- Care cards added automatically by JavaScript -->
+      </div>
+    </section>
+
+    <!-- 8. Exit Section -->
+    <section id="section-exit" class="card exit-card hidden">
+      <h2>Thank You for Using GO GREEN 🌱</h2>
+      <p>All added stock, updated quantities, and sold plant records are saved automatically.</p>
+      <div class="btn-row center-row">
+        <button class="action-btn" onclick="showSection('view')">Return to Menu</button>
+        <button class="secondary-btn" onclick="resetNursery()">Reset Sample Data</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

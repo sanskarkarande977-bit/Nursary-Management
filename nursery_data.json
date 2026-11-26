@@ -1,0 +1,40 @@
+{
+  "plants": {
+    "Money Plant": {
+      "price": 50,
+      "quantity": 20,
+      "water": "Moderate (2-3 times a week, when topsoil feels dry)",
+      "fertilizer": "Liquid houseplant fertilizer or vermicompost once a month",
+      "sunlight": "Indirect bright light (avoid harsh afternoon sun)"
+    },
+    "Rose Plant": {
+      "price": 80,
+      "quantity": 15,
+      "water": "Regular (daily in summer, every 2 days in winter)",
+      "fertilizer": "Compost, cow dung manure, or NPK rose fertilizer every 15-20 days",
+      "sunlight": "Full direct sunlight (5-6 hours daily)"
+    },
+    "Aloe Vera": {
+      "price": 60,
+      "quantity": 12,
+      "water": "Low (once every 1-2 weeks; let soil dry completely)",
+      "fertilizer": "Succulent fertilizer or mild compost twice a year",
+      "sunlight": "Bright sunlight (4-6 hours daily)"
+    },
+    "Tulsi Plant": {
+      "price": 40,
+      "quantity": 25,
+      "water": "Moderate (daily light watering in well-drained soil)",
+      "fertilizer": "Organic compost, vermicompost, or neem cake every 3-4 weeks",
+      "sunlight": "Full to partial sunlight (4-6 hours daily)"
+    },
+    "Sunflower": {
+      "price": 70,
+      "quantity": 10,
+      "water": "Regular (keep soil moist, especially during flowering)",
+      "fertilizer": "Balanced NPK or organic compost every 2-3 weeks",
+      "sunlight": "Full direct sunlight (6-8 hours daily)"
+    }
+  },
+  "sales": []
+}
